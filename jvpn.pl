@@ -174,18 +174,25 @@ my $dfirst="";
 if ($res->is_success) {
 	print("Transfer went ok\n");
 	# next token request
-	if ($response_body =~ /name="frmDefender"/ || $response_body =~ /name="frmNextToken"/) {
+	if ($response_body =~ /name="frmDefender"/ || $response_body =~ /name="frmNextToken"/ || $response_body =~ /name="frmLogin"/) {
 		$response_body =~ m/name="key" value="([^"]+)"/;
 		my $key=$1;
 		print  "The server requires that you enter an additional token ".
 			"code to verify that your credentials are valid.\n";
 		# grid cards. $1 contains grid reference
-		if ($response_body =~ /Challenge:([^"]+)\./) {
-			print $1;
+		if ($response_body =~ /Verification Code:*.*/) {
 			print "\n";
-			print "Enter challenge response: ";
-			$password=read_input("password");
+			$response_body=$res->decoded_content;
+			print "Enter authentication token: ";
+			my $googletoken=read_input("token");
 			print "\n";
+			my $res = $ua->post("https://$dhost:$dport/dana-na/auth/$durl/login.cgi",
+					[ btnSubmit   => 'Sign In',
+				        "password#2" => $googletoken,
+					key  => $key,
+					tz  => '60',
+				        ]);
+                        $response_body=$res->decoded_content;
 		}
 		# if password was specified in plaintext we should not use it 
 		# here, it will not work anyway
@@ -204,12 +211,6 @@ if ($res->is_success) {
 			$password=run_pw_helper($1);
 			delete $ENV{'OLDPIN'}; 
 		}
-		$res = $ua->post("https://$dhost:$dport/dana-na/auth/$durl/login.cgi",
-			[ Enter   => 'secidactionEnter',
-			password  => $password,
-			key  => $key,
-			]);
-		$response_body=$res->decoded_content;
 	}
 	if ( $response_body =~ /Invalid username or password/){
 		print "Invalid user name or password, exiting \n";
