@@ -289,7 +289,8 @@ if ($res->is_success) {
 		$response_body =~ m/name="FormDataStr" value="([^"]+)"/;
 		print "Active sessions found, reconnecting...\n";
 		$res = $ua->post("https://$dhost:$dport/dana-na/auth/$durl/login.cgi",
-			[ btnContinue   => 'Continue the session',
+			[ postfixSID => '0b9e9a25',
+			btnContinue   => 'Continue the session',
 			FormDataStr  => $1,
 			]);
 		$response_body=$res->decoded_content;
@@ -312,9 +313,9 @@ if ($res->is_success) {
 	}
 	
 	# do not print DSID in normal mode for security reasons
-	print $debug?"Got DSID=$dsid, dfirst=$dfirst, dlast=$dlast\n":"Got DSID\n";
+	print $debug?"Got DSID=$dsid, dfirst=$dfirst, dlast=$dlast\n":"Processing DSID\n";
 	if ($dsid eq "") {
-		print "Unable to get DSID, exiting \n";
+		print "Unable to get DSID, the string is empty. Exiting \n";
 		exit 1;
 	}
 	
