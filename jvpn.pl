@@ -194,6 +194,21 @@ if ($res->is_success) {
 				        ]);
                         $response_body=$res->decoded_content;
 		}
+		# challenge response
+		elsif ($response_body =~ /Challenge:*.*/) {
+			print "\n";
+			$response_body=$res->decoded_content;
+			print "Enter one time password: ";
+			my $otp=read_input("token");
+			print "\n";
+			my $res = $ua->post("https://$dhost:$dport/dana-na/auth/$durl/login.cgi",
+					[ btnSubmit   => 'Sign In',
+				        "password" => $otp,
+					key  => $key,
+					tz  => '60',
+				        ]);
+                        $response_body=$res->decoded_content;
+		}
 		# if password was specified in plaintext we should not use it 
 		# here, it will not work anyway
 		elsif ($cfgpass eq "interactive" || $cfgpass =~ /^plaintext:/) {
