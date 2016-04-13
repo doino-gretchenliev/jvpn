@@ -1,7 +1,33 @@
-# Why fork:
+1. Why fork:
 The need of fully automated Pulse SSL VPN connection.
 
-# How automate passcode generation:
+2. How to automate passcode generation:
+
++ Requisites
+    Tested on Mac OSX 10.11, Ubuntu 15.04 64-bit and Openwrt Chaos Calmer 15.05:
+    + On Ubuntu
+    `libpam0g-dev`
+    + On OSX
+    (None that I'm aware. Just Homebrew/Macports with default dev-tools)
+    + OpenWRT package building:
+    ```(...)
+    DEPENDS:=libpam
+    (...)```
++ Building
+    + `git submodule update --init --recursive`
+    + `cd gacli`
+    + `make all`
++ Using
+    + `echo <16_character_seed> > $HOME/.gacli`
+    + `chmod 0600 $HOME/.gacli`
+    Note: <16_character_seed> - provided by authentication service on first setup
+    
++ Test
+    + `bin/gacli`
+
+3. How to automate vpn authentication:
++ set `password` to `plaintext:<your_password>` or you can provide password script provider
++ add `ga-cmd=<path_to_gacli>` to `jvpn.ini` file
 
 
 # Original README:
