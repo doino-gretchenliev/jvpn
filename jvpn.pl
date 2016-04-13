@@ -56,6 +56,7 @@ my $mode=$Config{"mode"};
 my $script=$Config{"script"};
 my $cfgpass=$Config{"password"};
 my $workdir=$Config{"workdir"};
+my $ga_cmd=$Config{"ga-cmd"};
 my $password="";
 my $hostchecker=$Config{"hostchecker"};
 my $tncc_pid = 0;
@@ -183,9 +184,17 @@ if ($res->is_success) {
 		if ($response_body =~ /Verification Code:*.*/) {
 			print "\n";
 			$response_body=$res->decoded_content;
-			print "Enter authentication token: ";
-			my $googletoken=read_input("token");
-			print "\n";
+			my $googletoken="";
+			if (defined($ga_cmd)) {
+                print "Using Google authentication command line tool";
+                $googletoken=`$ga_cmd`;
+                $googletoken=~ s/\s+$//;
+                print "\n";
+			} else {
+                print "Enter authentication token: ";
+                my $googletoken=read_input("token");
+                print "\n";
+			}
 			my $res = $ua->post("https://$dhost:$dport/dana-na/auth/$durl/login.cgi",
 					[ btnSubmit   => 'Sign In',
 				        "password#2" => $googletoken,

@@ -1,9 +1,13 @@
+# Why fork:
+The need of fully automated Pulse SSL VPN connection.
+
+# How automate passcode generation:
+
+
+# Original README:
 
 As I had to start to use the Juniper's JunOS Pulse SSL VPN, after a while of Googling I've found the project called 'jvpn'.
 I found it very useful and straightforward at the same time, so I've just added 2FA bit to it, and it's ready to use.
-
-
-Original README:
 
 Project status update: i do not have access to the Juniper VPN host anymore, 
 so project is stalled. Feel free to fork it or use one of the 30+ forks :)
