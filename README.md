@@ -30,7 +30,7 @@ The need of fully automated Pulse SSL VPN connection.
 + add `ga-cmd=<path_to_gacli>` to `jvpn.ini` file
 
 
-# Original README:
+4. Original README:
 
 As I had to start to use the Juniper's JunOS Pulse SSL VPN, after a while of Googling I've found the project called 'jvpn'.
 I found it very useful and straightforward at the same time, so I've just added 2FA bit to it, and it's ready to use.
