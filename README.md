@@ -10,9 +10,11 @@ The need of fully automated Pulse SSL VPN connection.
     + On OSX
     (None that I'm aware. Just Homebrew/Macports with default dev-tools)
     + OpenWRT package building:
-    ```(...)
+    ```
+    (...)
     DEPENDS:=libpam
-    (...)```
+    (...)
+    ```
 + Building
     + `git submodule update --init --recursive`
     + `cd gacli`
